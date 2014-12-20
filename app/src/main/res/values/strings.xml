@@ -12,5 +12,7 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
     <string name="intent">Click here</string>
+    <string name="menu_item_ifRoom">Share</string>
+    <string name="menu_item_never">About</string>
 
 </resources>

@@ -3,18 +3,69 @@
     android:layout_height="match_parent"
     tools:context=".MaterialTestActivity">
 
-    <Button android:text="@string/intent" android:layout_width="wrap_content"
-        android:id="@+id/intent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar"
-        android:elevation="5dp"/>
 
-    <android.support.v7.widget.Toolbar
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="?attr/colorPrimaryDark"/>
+    <android.support.v4.widget.DrawerLayout
+        android:id="@+id/drawer"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
+
+        <!-- Content -->
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.Toolbar
+                xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="?attr/colorPrimaryDark"/>
+
+            <Button android:text="@string/intent" android:layout_width="wrap_content"
+                android:id="@+id/intent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/toolbar"
+                android:textColor="@color/material_deep_teal_200"
+                android:shadowColor="@color/button_material_dark"
+                android:elevation="10dp"/>
+
+            <ImageView
+                android:id="@+id/profPic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/intent"
+                android:layout_alignRight="@id/intent"/>
+
+        </RelativeLayout>
+
+        <!-- Side Drawer -->
+        <LinearLayout
+            android:id="@+id/drawer_view"
+            android:layout_width="@dimen/navigation_drawer_width"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:clickable="true"
+            android:fitsSystemWindows="true"
+            android:background="#88777777"
+            android:orientation="vertical">
+
+            <ListView
+                android:background="@color/primary_material_dark"
+                android:id="@+id/listitem"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="start"
+                android:dividerHeight="0dp"
+                android:divider="@null"
+                android:footerDividersEnabled="false"
+                android:headerDividersEnabled="false"
+                android:choiceMode="singleChoice">
+
+            </ListView>
+
+        </LinearLayout>
+
+    </android.support.v4.widget.DrawerLayout>
 
 
 </RelativeLayout>

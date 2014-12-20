@@ -2,5 +2,16 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools" tools:context=".MaterialTestActiviry">
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
+        android:orderInCategory="70" app:showAsAction="never" />
+
+    <item android:id="@+id/action_about"
+        android:title="@string/menu_item_never"
+        android:orderInCategory="80"
+        app:showAsAction="never" />
+
+    <item android:id="@+id/action_share"
+        android:title="@string/menu_item_ifRoom"
+        android:orderInCategory="90"
+        app:showAsAction="ifRoom" />
+
 </menu>
