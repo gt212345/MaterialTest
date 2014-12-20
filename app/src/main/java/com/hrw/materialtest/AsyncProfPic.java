@@ -22,16 +22,18 @@ public class AsyncProfPic {
     private GoogleApiClient mGoogleApiClient;
     private Context context;
     private Bitmap bitmap;
+    private ImageView imageView;
 
-    AsyncProfPic(GoogleApiClient mGoogleApiClient, Context context, Bitmap bitmap){
+    AsyncProfPic(GoogleApiClient mGoogleApiClient, Context context, Bitmap bitmap, ImageView imageView){
         this.mGoogleApiClient = mGoogleApiClient;
         this.context = context;
         this.bitmap = bitmap;
+        this.imageView = imageView;
     }
     /**
      * Fetching user's information name, email, profile pic
      * */
-    private void getProfileInformation() {
+    public void getProfileInformation() {
         try {
             if (Plus.PeopleApi.getCurrentPerson(mGoogleApiClient) != null) {
                 Person currentPerson = Plus.PeopleApi
@@ -50,9 +52,9 @@ public class AsyncProfPic {
                 // replacing sz=X
                 personPhotoUrl = personPhotoUrl.substring(0,
                         personPhotoUrl.length() - 2)
-                        + 50;
+                        + 400;
 
-                new LoadProfileImage(bitmap).execute(personPhotoUrl);
+                new LoadProfileImage(bitmap, imageView, context).execute(personPhotoUrl);
 
             } else {
                 Toast.makeText(context,"Person information is null", Toast.LENGTH_LONG).show();
@@ -67,9 +69,14 @@ public class AsyncProfPic {
      * */
     private class LoadProfileImage extends AsyncTask<String, Void, Bitmap> {
         Bitmap bitmap;
+        ImageView imageView;
+        Context context;
+        RoundedImageView roundedImageView;
 
-        public LoadProfileImage(Bitmap bitmap1) {
+        public LoadProfileImage(Bitmap bitmap1, ImageView imageView, Context context1) {
             this.bitmap = bitmap1;
+            this.imageView = imageView;
+            this.context = context1;
         }
 
         protected Bitmap doInBackground(String... urls) {
@@ -87,6 +94,8 @@ public class AsyncProfPic {
 
         protected void onPostExecute(Bitmap result) {
             bitmap = result;
+            roundedImageView = new RoundedImageView(context);
+            imageView.setImageBitmap(roundedImageView.getCroppedBitmap(result,100));
         }
     }
 }

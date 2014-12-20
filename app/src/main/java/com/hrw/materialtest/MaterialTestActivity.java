@@ -153,11 +153,11 @@ public class MaterialTestActivity extends ActionBarActivity implements View.OnCl
         Log.v(TAG,position+" position clicked");
     }
 
-
     @Override
     public void onConnected(Bundle bundle) {
         Log.v(TAG,"Connected");
-        asyncProfPic = new AsyncProfPic(mGoogleApiClient,this,bitmap);
+        asyncProfPic = new AsyncProfPic(mGoogleApiClient,this,bitmap, profPic);
+        asyncProfPic.getProfileInformation();
     }
 
     @Override
