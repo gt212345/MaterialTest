@@ -3,6 +3,10 @@ package com.hrw.materialtest;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -18,16 +22,22 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
+import com.afollestad.materialdialogs.MaterialDialog;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
+
+import java.io.InputStream;
+import java.net.URL;
 //import com.google.android.gms.plus.PlusClient;
 
 
 public class MaterialTestActivity extends ActionBarActivity implements View.OnClickListener, Toolbar.OnMenuItemClickListener, AdapterView.OnItemClickListener, GoogleApiClient.OnConnectionFailedListener, GoogleApiClient.ConnectionCallbacks {
     private static final String TAG = "MaterialTestActivity";
     private static final String PROFILE_ID = "107844609319480774924";
+    private static final String PROFILE_IMAGE_URL = "https://lh4.googleusercontent.com/-8mFzKs2MfvA/AAAAAAAAAAI/AAAAAAAADdM/z-i07HHS88g/photo.jpg?sz=400";
     private static final int REQUEST_CODE_SIGN_IN = 1;
     private static final int REQUEST_CODE_GET_GOOGLE_PLAY_SERVICES = 3;
 
@@ -43,8 +53,11 @@ public class MaterialTestActivity extends ActionBarActivity implements View.OnCl
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private ListView drawerList;
     private ListAdapter adapter;
+    private ImageView profPic, profCover;
+    private Drawable developDrawable;
     private Bitmap bitmap;
-    private ImageView profPic;
+    private RoundedImageView roundedImageView;
+    private TextView Name,Age,Email;
 
     protected void onStart() {
         super.onStart();
@@ -62,6 +75,22 @@ public class MaterialTestActivity extends ActionBarActivity implements View.OnCl
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        new AsyncTask<Void, Void, Void>() {
+            @Override
+            protected Void doInBackground(Void... params) {
+                try {
+                    InputStream in = new URL(PROFILE_IMAGE_URL).openStream();
+                    bitmap = BitmapFactory.decodeStream(in);
+                } catch (Exception e) {
+                    // log error
+                }
+                return null;
+            }
+            @Override
+            protected void onPostExecute(Void result) {
+            }
+        }.execute();
+
         setContentView(R.layout.activity_material_test_activity);
         /**
           * Google Api Client init
@@ -72,7 +101,11 @@ public class MaterialTestActivity extends ActionBarActivity implements View.OnCl
                 .addApi(Plus.API, Plus.PlusOptions.builder().build())
                 .addScope(Plus.SCOPE_PLUS_LOGIN)
                 .build();
+        Name = (TextView) findViewById(R.id.profName);
+        Age = (TextView) findViewById(R.id.profAge);
+        Email = (TextView) findViewById(R.id.profEmail);
         profPic = (ImageView) findViewById(R.id.profPic);
+        profCover = (ImageView) findViewById(R.id.profCover);
         drawerLayout = (DrawerLayout)findViewById(R.id.drawer);
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawerList = (ListView) findViewById(R.id.listitem);
@@ -137,9 +170,24 @@ public class MaterialTestActivity extends ActionBarActivity implements View.OnCl
         switch (menuItem.getItemId()){
             case R.id.action_about:
                 Log.v(TAG,"About clicked");
+                roundedImageView = new RoundedImageView(getApplicationContext());
+                developDrawable = new BitmapDrawable(getResources(),roundedImageView.getCroppedBitmap(bitmap,200));
+                new MaterialDialog.Builder(this)
+                    .title("Develop by\nHeiru Wu")
+                    .content("In order to be familiar with the newest material design guideline, I made this.\nAnd with google plus API")
+                    .positiveText("Got it")
+                    .icon(developDrawable)
+                    .show();
                 break;
             case R.id.action_share:
                 Log.v(TAG,"Share clicked");
+                break;
+            case R.id.action_logout:
+                if (mGoogleApiClient.isConnected()) {
+                    Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
+                    mGoogleApiClient.disconnect();
+                    Log.v(TAG,"Signed out");
+                }
                 break;
         }
         return false;
@@ -155,8 +203,8 @@ public class MaterialTestActivity extends ActionBarActivity implements View.OnCl
 
     @Override
     public void onConnected(Bundle bundle) {
-        Log.v(TAG,"Connected");
-        asyncProfPic = new AsyncProfPic(mGoogleApiClient,this,bitmap, profPic);
+        Log.v(TAG,"Signed in");
+        asyncProfPic = new AsyncProfPic(mGoogleApiClient,this, profPic, profCover, Name, Age, Email);
         asyncProfPic.getProfileInformation();
     }
 

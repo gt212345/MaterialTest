@@ -24,17 +24,44 @@
             <Button android:text="@string/intent" android:layout_width="wrap_content"
                 android:id="@+id/intent"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/toolbar"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
                 android:textColor="@color/material_deep_teal_200"
                 android:shadowColor="@color/button_material_dark"
                 android:elevation="10dp"/>
 
             <ImageView
+                android:id="@+id/profCover"
+                android:layout_below="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <ImageView
                 android:id="@+id/profPic"
+                android:layout_alignBottom="@+id/profCover"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/intent"
-                android:layout_alignRight="@id/intent"/>
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/profName"
+                android:textSize="25dp"
+                android:textColor="@color/primary_material_light"
+                android:layout_below="@+id/profPic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/profAge"
+                android:textSize="25dp"
+                android:textColor="@color/primary_material_light"
+                android:layout_below="@+id/profName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/profEmail"
+                android:textSize="25dp"
+                android:textColor="@color/primary_material_light"
+                android:layout_below="@+id/profAge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
 
         </RelativeLayout>
 

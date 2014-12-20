@@ -9,6 +9,11 @@
         android:orderInCategory="80"
         app:showAsAction="never" />
 
+    <item android:id="@+id/action_logout"
+        android:title="@string/menu_item_logout"
+        android:orderInCategory="75"
+        app:showAsAction="never" />
+
     <item android:id="@+id/action_share"
         android:title="@string/menu_item_ifRoom"
         android:orderInCategory="90"
