@@ -10,7 +10,9 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import com.hrw.materialtest.Fragments.BlankFragment;
+import com.hrw.materialtest.Fragments.FristWelFragment;
+import com.hrw.materialtest.Fragments.SecondWelFragment;
+import com.hrw.materialtest.Fragments.ThirdWelFragment;
 import com.hrw.materialtest.R;
 
 public class WelcomeActivity extends ActionBarActivity {
@@ -62,7 +64,13 @@ public class WelcomeActivity extends ActionBarActivity {
             Fragment fragment = null;
             switch (position) {
                 case 0:
-                    fragment = BlankFragment.newInstance("","");
+                    fragment = FristWelFragment.newInstance("", "");
+                    break;
+                case 1:
+                    fragment = SecondWelFragment.newInstance("", "");
+                    break;
+                case 2:
+                    fragment = ThirdWelFragment.newInstance("","");
                     break;
             }
 
@@ -70,7 +78,7 @@ public class WelcomeActivity extends ActionBarActivity {
         }
 
         public int getCount() {
-            return 1;
+            return 3;
         }
     }
 }

@@ -1,27 +1,24 @@
 package com.hrw.materialtest.Fragments;
 
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.HandlerThread;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
-import android.widget.RelativeLayout;
-import android.widget.TextView;
+import android.widget.ImageView;
 
+import com.hrw.materialtest.Activities.MaterialTestActivity;
 import com.hrw.materialtest.R;
-
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link BlankFragment#newInstance} factory method to
+ * Use the {@link ThirdWelFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class BlankFragment extends Fragment {
+public class ThirdWelFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -31,8 +28,7 @@ public class BlankFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    private Handler handler;
-    private HandlerThread handlerThread;
+    private ImageView signin;
 
 
     /**
@@ -41,11 +37,11 @@ public class BlankFragment extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment BlankFragment.
+     * @return A new instance of fragment ThirdWelFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static BlankFragment newInstance(String param1, String param2) {
-        BlankFragment fragment = new BlankFragment();
+    public static ThirdWelFragment newInstance(String param1, String param2) {
+        ThirdWelFragment fragment = new ThirdWelFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -53,7 +49,7 @@ public class BlankFragment extends Fragment {
         return fragment;
     }
 
-    public BlankFragment() {
+    public ThirdWelFragment() {
         // Required empty public constructor
     }
 
@@ -70,35 +66,20 @@ public class BlankFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_blank, container, false);
+        return inflater.inflate(R.layout.fragment_thirdwel, container, false);
     }
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        TextView welcome = (TextView)getView().findViewById(R.id.welcome);
-        welcome.startAnimation(AnimationUtils.loadAnimation(getActivity(),
-                R.anim.welcome));
-        RelativeLayout relativeLayout = (RelativeLayout)getView().findViewById(R.id.welcome_relat);
-        relativeLayout.setBackgroundResource(R.drawable.beacon2);
-        relativeLayout.startAnimation(AnimationUtils.loadAnimation(getActivity(),
-                R.anim.fade_in));
-        final TextView slide = (TextView)getView().findViewById(R.id.slide);
-        handlerThread = new HandlerThread("");
-        handlerThread.start();
-        handler = new Handler(handlerThread.getLooper());
-        handler.postDelayed(new Runnable() {
+        signin = (ImageView)getView().findViewById(R.id.signin);
+        signin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void run() {
-                getActivity().runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        slide.startAnimation(AnimationUtils.loadAnimation(getActivity(),
-                                R.anim.blink));
-                        slide.setVisibility(View.VISIBLE);
-                    }
-                });
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MaterialTestActivity.class);
+                startActivity(intent);
+                getActivity().finish();
             }
-        },2300);
+        });
     }
 }

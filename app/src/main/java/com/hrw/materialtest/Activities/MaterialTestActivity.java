@@ -113,7 +113,7 @@ public class MaterialTestActivity extends ActionBarActivity implements View.OnCl
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         drawerList = (ListView) findViewById(R.id.listitem);
         adapter = new ArrayAdapter(this,R.layout.adapter_list,
-                new String[]{"Section 1","Section 2","Section 3"}
+                new String[]{"Shop news","Shop map","Account"}
                 //Drawer List
         );
         drawerList.setOnItemClickListener(this);
@@ -177,7 +177,7 @@ public class MaterialTestActivity extends ActionBarActivity implements View.OnCl
                 developDrawable = new BitmapDrawable(getResources(),roundedImageView.getCroppedBitmap(bitmap,200));
                 new MaterialDialog.Builder(this)
                     .title("Develop by\nHeiru Wu")
-                    .content("In order to be familiar with the newest material design guideline, I made this.\nAnd with google plus API")
+                    .content("This app is dedicated for your personal shopping experience, with the newest technolog--iBeacon.\nAll right reserved to Heiru Wu")
                     .positiveText("Got it")
                     .icon(developDrawable)
                     .show();

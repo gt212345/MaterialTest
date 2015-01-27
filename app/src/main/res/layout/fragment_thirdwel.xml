@@ -1,0 +1,43 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.hrw.materialtest.Fragments.FristWelFragment">
+
+    <ImageView
+
+        android:id="@+id/beacon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/gplus"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/drawtext" />
+    <ImageView
+        android:id="@+id/signin"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/gplussignin"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="87dp" />
+
+    <TextView
+        android:id="@+id/drawtext"
+        android:textStyle="bold|italic"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="left"
+        android:textColor="#FF00AAAA"
+        android:text="You can also sign in with your google plus account, to share the shop you currently in or the discount and on sale news!!"
+        android:layout_above="@+id/signin"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="82dp" />
+
+
+</RelativeLayout>

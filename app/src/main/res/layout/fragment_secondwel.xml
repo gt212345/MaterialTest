@@ -1,0 +1,24 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.hrw.materialtest.Fragments.FristWelFragment">
+
+    <ImageView
+        android:id="@+id/beacon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/beacon1"/>
+
+    <TextView
+        android:id="@+id/drawtext"
+        android:textStyle="bold|italic"
+        android:textSize="20sp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textColor="#FF00AAAA"
+        android:text="As u approach any iBeacon device,\n it'll push notifications to your own device"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+</RelativeLayout>
