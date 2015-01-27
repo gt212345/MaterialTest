@@ -2,15 +2,19 @@ package com.hrw.materialtest.Fragments;
 
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.hrw.materialtest.R;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -26,6 +30,9 @@ public class BlankFragment extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+
+    private Handler handler;
+    private HandlerThread handlerThread;
 
 
     /**
@@ -71,6 +78,27 @@ public class BlankFragment extends Fragment {
         super.onActivityCreated(savedInstanceState);
         TextView welcome = (TextView)getView().findViewById(R.id.welcome);
         welcome.startAnimation(AnimationUtils.loadAnimation(getActivity(),
-                R.anim.anim));
+                R.anim.welcome));
+        RelativeLayout relativeLayout = (RelativeLayout)getView().findViewById(R.id.welcome_relat);
+        relativeLayout.setBackgroundResource(R.drawable.beacon2);
+        relativeLayout.startAnimation(AnimationUtils.loadAnimation(getActivity(),
+                R.anim.fade_in));
+        final TextView slide = (TextView)getView().findViewById(R.id.slide);
+        handlerThread = new HandlerThread("");
+        handlerThread.start();
+        handler = new Handler(handlerThread.getLooper());
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        slide.startAnimation(AnimationUtils.loadAnimation(getActivity(),
+                                R.anim.blink));
+                        slide.setVisibility(View.VISIBLE);
+                    }
+                });
+            }
+        },2300);
     }
 }
