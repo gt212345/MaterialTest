@@ -1,5 +1,8 @@
 package com.hrw.materialtest.Activities;
 
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.IntentSender;
 import android.graphics.Bitmap;
@@ -29,6 +32,7 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
 import com.google.android.gms.plus.Plus;
 import com.hrw.materialtest.AsyncProfPic;
+import com.hrw.materialtest.Fragments.FirstSideFragment;
 import com.hrw.materialtest.R;
 import com.hrw.materialtest.RoundedImageView;
 
@@ -62,6 +66,10 @@ public class MaterialTestActivity extends ActionBarActivity implements View.OnCl
     private RoundedImageView roundedImageView;
     private TextView Name,Age,Email;
 
+    private FragmentManager fragmentManager;
+
+    private ProgressDialog progressDialog;
+
     protected void onStart() {
         super.onStart();
         mGoogleApiClient.connect();
@@ -93,7 +101,6 @@ public class MaterialTestActivity extends ActionBarActivity implements View.OnCl
             protected void onPostExecute(Void result) {
             }
         }.execute();
-
         setContentView(R.layout.activity_material_test_activity);
         /**
           * Google Api Client init
@@ -104,7 +111,9 @@ public class MaterialTestActivity extends ActionBarActivity implements View.OnCl
                 .addApi(Plus.API, Plus.PlusOptions.builder().build())
                 .addScope(Plus.SCOPE_PLUS_LOGIN)
                 .build();
+        signIn();
         Name = (TextView) findViewById(R.id.profName);
+        Name.setOnClickListener(this);
         Age = (TextView) findViewById(R.id.profAge);
         Email = (TextView) findViewById(R.id.profEmail);
         profPic = (ImageView) findViewById(R.id.profPic);
@@ -125,13 +134,13 @@ public class MaterialTestActivity extends ActionBarActivity implements View.OnCl
         }
         toolbar.setOnMenuItemClickListener(this);
         actionBarDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.navigation_drawer_open,R.string.navigation_drawer_close){
+
             //override methods
         };
         actionBarDrawerToggle.syncState();
         drawerLayout.setDrawerListener(actionBarDrawerToggle);
         intent = (Button)findViewById(R.id.intent);
         intent.setOnClickListener(this);
-        mGoogleApiClient.connect();
     }
 
     @Override
@@ -165,6 +174,9 @@ public class MaterialTestActivity extends ActionBarActivity implements View.OnCl
                 startActivity(intent1);
 //                this.finish();
                 break;
+            case R.id.profName:
+                if(((TextView)v).getText() == "Login data null")signIn();
+                break;
         }
     }
 
@@ -190,6 +202,7 @@ public class MaterialTestActivity extends ActionBarActivity implements View.OnCl
                     Plus.AccountApi.clearDefaultAccount(mGoogleApiClient);
                     mGoogleApiClient.disconnect();
                     Log.v(TAG,"Signed out");
+                    clearData();
                 }
                 break;
         }
@@ -198,8 +211,25 @@ public class MaterialTestActivity extends ActionBarActivity implements View.OnCl
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        Fragment fragment;
+        fragmentManager = getFragmentManager();
         switch (position){
-
+            case 0:
+                fragment = FirstSideFragment.newInstance("1","");
+                break;
+            case 1:
+                fragment = FirstSideFragment.newInstance("2","");
+                break;
+            case 2:
+                fragment = FirstSideFragment.newInstance("3","");
+                break;
+            default:
+                fragment = null;
+                break;
+        }
+        if(fragment != null) {
+            fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+            drawerLayout.closeDrawers();
         }
         Log.v(TAG,position+" position clicked");
     }
@@ -209,6 +239,7 @@ public class MaterialTestActivity extends ActionBarActivity implements View.OnCl
         Log.v(TAG,"Signed in");
         asyncProfPic = new AsyncProfPic(mGoogleApiClient,this, profPic, profCover, Name, Age, Email);
         asyncProfPic.getProfileInformation();
+        progressDialog.dismiss();
     }
 
     @Override
@@ -239,5 +270,18 @@ public class MaterialTestActivity extends ActionBarActivity implements View.OnCl
                 mGoogleApiClient.connect();
             }
         }
+    }
+
+    private void clearData(){
+        Name.setText("Login data null");
+        Age.setText("Login data null");
+        Email.setText("Login data null");
+        profPic.setImageBitmap(null);
+        profCover.setImageBitmap(null);
+    }
+
+    private void signIn(){
+        progressDialog = ProgressDialog.show(this,"Please wait","Logging......",true);
+        mGoogleApiClient.connect();
     }
 }
