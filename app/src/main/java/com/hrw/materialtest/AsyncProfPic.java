@@ -25,7 +25,7 @@ public class AsyncProfPic {
     private ImageView profPic,profCover;
     private TextView Name,Email,Age;
 
-    AsyncProfPic(GoogleApiClient mGoogleApiClient, Context context, ImageView profPic, ImageView profCover, TextView Name, TextView Age, TextView Email){
+    public AsyncProfPic(GoogleApiClient mGoogleApiClient, Context context, ImageView profPic, ImageView profCover, TextView Name, TextView Age, TextView Email){
         this.mGoogleApiClient = mGoogleApiClient;
         this.context = context;
         this.profPic = profPic;
