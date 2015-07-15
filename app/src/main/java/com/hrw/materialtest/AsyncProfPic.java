@@ -65,8 +65,8 @@ public class AsyncProfPic {
                 personPhotoUrl = personPhotoUrl.substring(0,
                         personPhotoUrl.length() - 2)
                         + 400;
-                new LoadProfileImage(profPic, context,true).execute(personPhotoUrl);
-                new LoadProfileImage(profCover, context,false).execute(personCoverPhotoUrl);
+                new LoadProfileImage(profPic, context, true).execute(personPhotoUrl);
+                new LoadProfileImage(profCover, context, false).execute(personCoverPhotoUrl);
 
             } else {
                 Toast.makeText(context,"Person information is null", Toast.LENGTH_LONG).show();

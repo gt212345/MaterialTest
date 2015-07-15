@@ -3,14 +3,14 @@ apply plugin: 'com.android.application'
 android {
     signingConfigs {
         config {
-            keyAlias 'androiddebugkey'
-            keyPassword 'wuheirugt212345'
-            storeFile file('C:/Users/Wu/androiddebugkey.keystore')
-            storePassword 'wuheirugt212345'
+//            keyAlias 'androiddebugkey'
+//            keyPassword 'wuheirugt212345'
+//            storeFile file('C:/Users/Wu/androiddebugkey.keystore')
+//            storePassword 'wuheirugt212345'
         }
     }
     compileSdkVersion 21
-    buildToolsVersion "21.1.1"
+    buildToolsVersion "21.1.2"
     defaultConfig {
         applicationId "com.hrw.materialtest"
         minSdkVersion 14
